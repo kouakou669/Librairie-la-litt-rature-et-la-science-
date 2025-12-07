@@ -1,1 +1,958 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConcoursPro CI - Réussissez vos Concours en Côte d'Ivoire 🇨🇮</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #009e4f 100%);
+            color: white;
+            padding: 1.2rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #009e4f 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path fill="%23ffffff" fill-opacity="0.1" d="M0,0 C300,100 900,100 1200,0 L1200,120 L0,120 Z"></path></svg>');
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s;
+        }
+
+        .hero .flag {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.2);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b35 0%, #009e4f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .urgent-banner {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff4757 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 25px rgba(255,107,53,0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .urgent-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .concours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .concours-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s;
+            border: 3px solid transparent;
+            position: relative;
+        }
+
+        .concours-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+            border-color: #ff6b35;
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b35;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+
+        .badge.nouveau {
+            background: #009e4f;
+        }
+
+        .concours-header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .concours-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        .concours-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .concours-header p {
+            opacity: 0.95;
+            font-size: 0.95rem;
+        }
+
+        .concours-body {
+            padding: 2rem;
+        }
+
+        .concours-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .concours-features li {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .concours-features li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            color: #009e4f;
+            font-weight: bold;
+        }
+
+        .price-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1rem;
+        }
+
+        .new-price {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #ff6b35;
+            margin: 0.5rem 0;
+        }
+
+        .promo-text {
+            color: #009e4f;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366 0%, #20ba5a 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(37,211,102,0.3);
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #25D366 0%, #20ba5a 100%);
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+            animation: floatBounce 3s infinite;
+        }
+
+        @keyframes floatBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.15);
+        }
+
+        .testimonials {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .testimonials-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid #ff6b35;
+        }
+
+        .testimonial-stars {
+            color: #f7931e;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #009e4f;
+        }
+
+        .features {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        .features-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+
+        .feature:hover {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .garantie-section {
+            background: linear-gradient(135deg, #009e4f 0%, #00b359 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border-radius: 20px;
+        }
+
+        .garantie-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .footer-contact {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .flag {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-stats {
+                gap: 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .concours-grid, .testimonials-grid, .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                🎓 ConcoursPro CI
+            </div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#concours">Concours</a></li>
+                <li><a href="#temoignages">Témoignages</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <div class="flag">🇨🇮</div>
+            <h1>Réussissez Vos Concours en Côte d'Ivoire</h1>
+            <p>Documents PDF de Préparation Complets & Actualisés 2025</p>
+            <div class="hero-stats">
+                <div class="stat-box">
+                    <div class="stat-number">5000+</div>
+                    <div class="stat-label">Candidats Satisfaits</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Taux de Réussite</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Concours Couverts</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="urgent-banner">
+            <h3>🔥 PROMO SPÉCIALE - Session 2025 🔥</h3>
+            <p>Jusqu'à -30% sur tous nos packs de préparation aux concours !</p>
+        </div>
+
+        <h2 class="section-title" id="concours">Nos Préparations aux Concours</h2>
+        <p class="section-subtitle">Choisissez votre concours et maximisez vos chances de réussite !</p>
+
+        <div class="concours-grid">
+            <!-- INFAS -->
+            <div class="concours-card">
+                <div class="badge">POPULAIRE</div>
+                <div class="concours-header">
+                    <div class="concours-icon">🏥</div>
+                    <h3>INFAS</h3>
+                    <p>Institut National de Formation des Agents de Santé</p>
+                </div>
+                <div class="concours-body">
+                    <ul class="concours-features">
+                        <li><span class="check-icon">✓</span> Cours complets actualisés 2025</li>
+                        <li><span class="check-icon">✓</span> 500+ QCM corrigés et commentés</li>
+                        <li><span class="check-icon">✓</span> Annales 5 dernières années</li>
+                        <li><span class="check-icon">✓</span> Méthodologie de préparation</li>
+                        <li><span class="check-icon">✓</span> Tests blancs chronométrés</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="old-price">7000 FCFA</div>
+                        <div class="new-price">4900 FCFA</div>
+                        <div class="promo-text">🎉 Économisez 2100 FCFA</div>
+                    </div>
+                    <button class="whatsapp-btn" onclick="commanderWhatsApp('Pack INFAS Complet 2025', '4900 FCFA')">
+                        💬 Commander Maintenant
+                    </button>
+                </div>
+            </div>
+
+            <!-- ENI -->
+            <div class="concours-card">
+                <div class="badge nouveau">NOUVEAU</div>
+                <div class="concours-header" style="background: linear-gradient(135deg, #009e4f 0%, #00b359 100%);">
+                    <div class="concours-icon">👨‍🏫</div>
+                    <h3>ENI / CAFOP</h3>
+                    <p>École Normale d'Instituteurs</p>
+                </div>
+                <div class="concours-body">
+                    <ul class="concours-features">
+                        <li><span class="check-icon">✓</span> Programme complet révisé</li>
+                        <li><span class="check-icon">✓</span> Épreuves types + corrections</li>
+                        <li><span class="check-icon">✓</span> Culture générale approfondie</li>
+                        <li><span class="check-icon">✓</span> Français & Mathématiques</li>
+                        <li><span class="check-icon">✓</span> Conseils pour l'oral</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="old-price">6500 FCFA</div>
+                        <div class="new-price">4500 FCFA</div>
+                        <div class="promo-text">🎉 Économisez 2000 FCFA</div>
+                    </div>
+                    <button class="whatsapp-btn" onclick="commanderWhatsApp('Pack ENI/CAFOP Complet 2025', '4500 FCFA')">
+                        💬 Commander Maintenant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Fonction Publique -->
+            <div class="concours-card">
+                <div class="badge">TOP VENTE</div>
+                <div class="concours-header" style="background: linear-gradient(135deg, #f7931e 0%, #ff6b35 100%);">
+                    <div class="concours-icon">🏛️</div>
+                    <h3>Fonction Publique</h3>
+                    <p>Tous concours administratifs</p>
+                </div>
+                <div class="concours-body">
+                    <ul class="concours-features">
+                        <li><span class="check-icon">✓</span> Culture générale CI & Afrique</li>
+                        <li><span class="check-icon">✓</span> 1000+ QCM thématiques</li>
+                        <li><span class="check-icon">✓</span> Tests psychotechniques</li>
+                        <li><span class="check-icon">✓</span> Droit public & administratif</li>
+                        <li><span class="check-icon">✓</span> Techniques de rédaction</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="old-price">8000 FCFA</div>
+                        <div class="new-price">5500 FCFA</div>
+                        <div class="promo-text">🎉 Économisez 2500 FCFA</div>
+                    </div>
+                    <button class="whatsapp-btn" onclick="commanderWhatsApp('Pack Fonction Publique Complet 2025', '5500 FCFA')">
+                        💬 Commander Maintenant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Police Nationale -->
+            <div class="concours-card">
+                <div class="concours-header" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">
+                    <div class="concours-icon">👮</div>
+                    <h3>Police Nationale</h3>
+                    <p>Concours de recrutement</p>
+                </div>
+                <div class="concours-body">
+                    <ul class="concours-features">
+                        <li><span class="check-icon">✓</span> Préparation physique & mentale</li>
+                        <li><span class="check-icon">✓</span> Culture générale sécuritaire</li>
+                        <li><span class="check-icon">✓</span> Tests d'aptitude physique</li>
+                        <li><span class="check-icon">✓</span> Législation ivoirienne</li>
+                        <li><span class="check-icon">✓</span> Mise en situation pratique</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="old-price">7000 FCFA</div>
+                        <div class="new-price">4900 FCFA</div>
+                        <div class="promo-text">🎉 Économisez 2100 FCFA</div>
+                    </div>
+                    <button class="whatsapp-btn" onclick="commanderWhatsApp('Pack Police Nationale Complet 2025', '4900 FCFA')">
+                        💬 Commander Maintenant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Douanes -->
+            <div class="concours-card">
+                <div class="concours-header" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <div class="concours-icon">🛃</div>
+                    <h3>Douanes Ivoiriennes</h3>
+                    <p>Direction Générale des Douanes</p>
+                </div>
+                <div class="concours-body">
+                    <ul class="concours-features">
+                        <li><span class="check-icon">✓</span> Code des douanes UEMOA</li>
+                        <li><span class="check-icon">✓</span> Économie & Commerce international</li>
+                        <li><span class="check-icon">✓</span> Mathématiques financières</li>
+                        <li><span class="check-icon">✓</span> Législation douanière</li>
+                        <li><span class="check-icon">✓</span> Cas pratiques réels</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="old-price">7500 FCFA</div>
+                        <div class="new-price">5200 FCFA</div>
+                        <div class="promo-text">🎉 Économisez 2300 FCFA</div>
+                    </div>
+                    <button class="whatsapp-btn" onclick="commanderWhatsApp('Pack Douanes Complet 2025', '5200 FCFA')">
+                        💬 Commander Maintenant
+                    </button>
+                </div>
+            </div>
+
+            <!-- ENA -->
+            <div class="concours-card">
+                <div class="badge">EXCELLENCE</div>
+                <div class="concours-header" style="background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);">
+                    <div class="concours-icon">🎓</div>
+                    <h3>ENA</h3>
+                    <p>École Nationale d'Administration</p>
+                </div>
+                <div class="concours-body">
+                    <ul class="concours-features">
+                        <li><span class="check-icon">✓</span> Administration publique</li>
+                        <li><span class="check-icon">✓</span> Droit constitutionnel & administratif</li>
+                        <li><span class="check-icon">✓</span> Économie politique</li>
+                        <li><span class="check-icon">✓</span> Institutions ivoiriennes</li>
+                        <li><span class="check-icon">✓</span> Note de synthèse</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="old-price">9000 FCFA</div>
+                        <div class="new-price">6300 FCFA</div>
+                        <div class="promo-text">🎉 Économisez 2700 FCFA</div>
+                    </div>
+                    <button class="whatsapp-btn" onclick="commanderWhatsApp('Pack ENA Complet 2025', '6300 FCFA')">
+                        💬 Commander Maintenant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Armée -->
+            <div class="concours-card">
+                <div class="concours-header" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
+                    <div class="concours-icon">🎖️</div>
+                    <h3>Forces Armées CI</h3>
+                    <p>Recrutement Armée de Terre, Air, Marine</p>
+                </div>
+                <div class="concours-body">
+                    <ul class="concours-features">
+                        <li><span class="check-icon">✓</span> Tests d'aptitude militaire</li>
+                        <li><span class="check-icon">✓</span> Culture générale défense</li>
+                        <li><span class="check-icon">✓</span> Préparation tests physiques</li>
+                        <li><span class="check-icon">✓</span> Mathématiques & Logique</li>
+                        <li><span class="check-icon">✓</span> Entretien de motivation</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="old-price">7000 FCFA</div>
+                        <div class="new-price">4900 FCFA</div>
+                        <div class="promo-text">🎉 Économisez 2100 FCFA</div>
+                    </div>
+                    <button class="whatsapp-btn" onclick="commanderWhatsApp('Pack Forces Armées Complet 2025', '4900 FCFA')">
+                        💬 Commander Maintenant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pack Examens BAC -->
+            <div class="concours-card">
+                <div class="badge nouveau">NOUVEAU</div>
+                <div class="concours-header" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                    <div class="concours-icon">📚</div>
+                    <h3>BAC 2025</h3>
+                    <p>Toutes séries A, C, D</p>
+                </div>
+                <div class="concours-body">
+                    <ul class="concours-features">
+                        <li><span class="check-icon">✓</span> Sujets & corrigés 10 ans</li>
+                        <li><span class="check-icon">✓</span> Fiches de révision complètes</li>
+                        <li><span class="check-icon">✓</span> Toutes les matières</li>
+                        <li><span class="check-icon">✓</span> Méthodologie épreuves</li>
+                        <li><span class="check-icon">✓</span> Sujets probables 2025</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="old-price">8000 FCFA</div>
+                        <div class="new-price">5500 FCFA</div>
+                        <div class="promo-text">🎉 Économisez 2500 FCFA</div>
+                    </div>
+                    <button class="whatsapp-btn" onclick="commanderWhatsApp('Pack BAC Toutes Séries 2025', '5500 FCFA')">
+                        💬 Commander Maintenant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pack BEPC -->
+            <div class="concours-card">
+                <div class="concours-header" style="background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);">
+                    <div class="concours-icon">📖</div>
+                    <h3>BEPC 2025</h3>
+                    <p>Diplôme de Fin d'Études</p>
+                </div>
+                <div class="concours-body">
+                    <ul class="concours-features">
+                        <li><span class="check-icon">✓</span> Programme complet révisé</li>
+                        <li><span class="check-icon">✓</span> Annales corrigées 8 ans</li>
+                        <li><span class="check-icon">✓</span> Toutes matières essentielles</li>
+                        <li><span class="check-icon">✓</span> Exercices types</li>
+                        <li><span class="check-icon">✓</span> Astuces de réussite</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="old-price">5000 FCFA</div>
+                        <div class="new-price">3500 FCFA</div>
+                        <div class="promo-text">🎉 Économisez 1500 FCFA</div>
+                    </div>
+                    <button class="whatsapp-btn" onclick="commanderWhatsApp('Pack BEPC Complet 2025', '3500 FCFA')">
+                        💬 Commander Maintenant
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="garantie-section">
+            <h2>✅ Garantie Satisfait ou Remboursé</h2>
+            <p style="font-size: 1.2rem; max-width: 800px; margin: 1rem auto;">
+                Nous sommes tellement confiants dans la qualité de nos documents que nous vous offrons une garantie de remboursement intégral si vous n'êtes pas satisfait dans les 7 jours suivant votre achat.
+            </p>
+        </div>
+    </div>
+
+    <section class="testimonials" id="temoignages">
+        <h2 class="section-title">💬 Ce que disent nos clients</h2>
+        <p class="section-subtitle">Plus de 5000 candidats nous font confiance</p>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"Grâce à vos documents INFAS, j'ai été admis du premier coup ! Les QCM sont exactement comme à l'examen. Merci infiniment !"</p>
+                <p class="testimonial-author">- Kouassi Ange, Admise INFAS 2024</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"Le pack Fonction Publique est complet et bien structuré. J'ai obtenu mon concours grâce à votre préparation. Je recommande à 100%!"</p>
+                <p class="testimonial-author">- Traoré Ibrahim, Fonctionnaire 2024</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"Livraison instantanée, documents clairs et actualisés. Les tests blancs m'ont vraiment aidé à gérer le stress le jour J."</p>
+                <p class="testimonial-author">- N'Guessan Marie, Admise ENI 2024</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">Pourquoi Nous Choisir ?</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Livraison Instantanée</h3>
+                <p>Recevez vos PDF immédiatement après commande sur WhatsApp</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <h3>100% Numérique</h3>
+                <p>Consultez vos documents sur smartphone, tablette ou ordinateur</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h3>Contenu Actualisé</h3>
+                <p>Tous nos documents sont mis à jour pour la session 2025</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💰</div>
+                <h3>Prix Imbattables</h3>
+                <p>Les meilleurs tarifs du marché avec promotions régulières</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✅</div>
+                <h3>Qualité Garantie</h3>
+                <p>Documents vérifiés par des professionnels et anciens lauréats</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🤝</div>
+                <h3>Support 24/7</h3>
+                <p>Notre équipe répond à toutes vos questions rapidement</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="whatsapp-float" onclick="ouvrirWhatsApp()">
+        💬
+    </div>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">🇨🇮 ConcoursPro CI</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">
+                Votre partenaire de réussite pour tous les concours en Côte d'Ivoire
+            </p>
+            <div class="footer-contact">
+                📞 WhatsApp : +225 07 05 60 72 26
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.8;">
+                Disponible 7j/7 de 7h à 22h<br>
+                Livraison instantanée · Paiement sécurisé · Support client réactif
+            </p>
+            <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.6;">
+                © 2025 ConcoursPro CI - Tous droits réservés
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function commanderWhatsApp(produit, prix) {
+            const numero = '2250705607226';
+            const message = encodeURIComponent(
+                `🇨🇮 Bonjour ConcoursPro CI !\n\nJe souhaite commander :\n\n📚 ${produit}\n💰 Prix : ${prix}\n\nMerci de me confirmer et m'envoyer le document PDF.`
+            );
+            window.open(`https://wa.me/${numero}?text=${message}`, '_blank');
+        }
+
+        function ouvrirWhatsApp() {
+            const numero = '2250705607226';
+            const message = encodeURIComponent(
+                '🇨🇮 Bonjour ConcoursPro CI !\n\nJe souhaite avoir plus d\'informations sur vos documents de préparation aux concours.\n\nMerci !'
+            );
+            window.open(`https://wa.me/${numero}?text=${message}`, '_blank');
+        }
+
+        // Animations au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.concours-card, .testimonial-card, .feature').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Effet de compteur pour les statistiques
+        function animateCounter(element, target, duration) {
+            let current = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + (element.textContent.includes('%') ? '%' : '+');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (element.textContent.includes('%') ? '%' : '+');
+                }
+            }, 16);
+        }
+
+        window.addEventListener('load', () => {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const text = stat.textContent;
+                const number = parseInt(text.replace(/\D/g, ''));
+                stat.textContent = '0';
+                animateCounter(stat, number, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
