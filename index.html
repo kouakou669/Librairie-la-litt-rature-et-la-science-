@@ -1,1 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DECO AIDE - Plateforme d'Inscription</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .form-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .coordinator {
+            text-align: center;
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .registered-list {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .registered-list h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .student-card {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        .student-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .student-info p {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .testimonials {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .testimonials h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .testimonial {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .testimonial-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-info .exam {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .testimonial-text {
+            color: #333;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .social-share {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .social-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 5px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .facebook {
+            background: #1877f2;
+        }
+
+        .whatsapp {
+            background: #25d366;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .form-section, .registered-list, .testimonials {
+                padding: 20px;
+            }
+            
+            .student-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎓 DECO AIDE</h1>
+            <p>Plateforme d'Inscription - Côte d'Ivoire</p>
+            <p>Votre Réussite, Notre Mission</p>
+        </div>
+
+        <!-- Formulaire d'inscription -->
+        <div class="form-section">
+            <div class="form-title">FICHE D'INSCRIPTION</div>
+            
+            <div class="coordinator">
+                Coordinateur: Mr KOUAME JEAN-PIERRE
+            </div>
+
+            <form id="inscriptionForm">
+                <div class="form-group">
+                    <label>OPÉRATION:</label>
+                    <input type="text" id="operation" required placeholder="Entrez l'opération">
+                </div>
+
+                <div class="form-group">
+                    <label>NOM:</label>
+                    <input type="text" id="nom" required placeholder="Votre nom de famille">
+                </div>
+
+                <div class="form-group">
+                    <label>PRÉNOM:</label>
+                    <input type="text" id="prenom" required placeholder="Votre prénom">
+                </div>
+
+                <div class="form-group">
+                    <label>SÉRIE:</label>
+                    <select id="serie" required>
+                        <option value="">-- Choisir une série --</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="G">G</option>
+                        <option value="3ème (BEPC)">3ème (BEPC)</option>
+                        <option value="Concours Administratif">Concours Administratif</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>VILLE:</label>
+                    <input type="text" id="ville" required placeholder="Votre ville">
+                </div>
+
+                <div class="form-group">
+                    <label>MATRICULE:</label>
+                    <input type="text" id="matricule" required placeholder="Votre matricule">
+                </div>
+
+                <div class="form-group">
+                    <label>LANGUE VIVANTE (LV1/LV2):</label>
+                    <input type="text" id="langue" required placeholder="Ex: Anglais/Espagnol">
+                </div>
+
+                <div class="form-group">
+                    <label>LE PREMIER MONTANT À VERSER:</label>
+                    <input type="text" id="montant" required placeholder="Montant en FCFA">
+                </div>
+
+                <div class="form-group">
+                    <label>NUMÉRO TÉLÉPHONE D'URGENCE:</label>
+                    <input type="tel" id="telephone" required placeholder="+225 XX XX XX XX XX">
+                </div>
+
+                <button type="submit" class="btn-submit">S'inscrire Maintenant</button>
+            </form>
+        </div>
+
+        <!-- Liste des inscrits -->
+        <div class="registered-list">
+            <h2>📋 Étudiants Inscrits</h2>
+            <div id="studentsList"></div>
+        </div>
+
+        <!-- Témoignages -->
+        <div class="testimonials">
+            <h2>🌟 Témoignages de Réussite</h2>
+            
+            <div class="testimonial">
+                <div class="testimonial-header">
+                    <div class="avatar">AK</div>
+                    <div class="testimonial-info">
+                        <h4>Adjoua Kouadio</h4>
+                        <span class="exam">BAC D 2025 - Mention Bien</span>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "Grâce à DECO AIDE, j'ai reçu les sujets à 00h pile chaque veille d'examen sur WhatsApp. 
+                    Cela m'a permis de mieux me préparer et de décrocher mon BAC avec mention. Merci infiniment ! 🎉"
+                </p>
+            </div>
+
+            <div class="testimonial">
+                <div class="testimonial-header">
+                    <div class="avatar">YT</div>
+                    <div class="testimonial-info">
+                        <h4>Yao Tano</h4>
+                        <span class="exam">BEPC 2025 - Admis</span>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "Les sujets envoyés sur Facebook m'ont sauvé la vie ! J'ai pu réviser exactement ce qu'il fallait. 
+                    DECO AIDE est vraiment sérieux et efficace. Je recommande à 100% ! 💯"
+                </p>
+            </div>
+
+            <div class="testimonial">
+                <div class="testimonial-header">
+                    <div class="avatar">KB</div>
+                    <div class="testimonial-info">
+                        <h4>Konan Brou</h4>
+                        <span class="exam">Concours Administratif 2025 - Admis</span>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "J'ai réussi mon concours administratif grâce aux sujets reçus à minuit via WhatsApp. 
+                    L'équipe de DECO AIDE est professionnelle et ponctuelle. Que Dieu vous bénisse ! 🙏"
+                </p>
+            </div>
+
+            <div class="testimonial">
+                <div class="testimonial-header">
+                    <div class="avatar">MA</div>
+                    <div class="testimonial-info">
+                        <h4>Marie Assoua</h4>
+                        <span class="exam">BAC A2 2025 - Mention Très Bien</span>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "Incroyable ! Tous les sujets que j'ai reçus étaient conformes aux épreuves. 
+                    DECO AIDE m'a aidée à obtenir ma mention Très Bien. C'est le meilleur investissement ! ⭐"
+                </p>
+            </div>
+
+            <div class="social-share">
+                <p style="color: #333; margin-bottom: 15px; font-size: 1.2em;">
+                    <strong>Recevez les sujets à 00h via :</strong>
+                </p>
+                <a href="#" class="social-btn facebook">📘 Facebook</a>
+                <a href="#" class="social-btn whatsapp">📱 WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Récupérer les données du localStorage
+        let students = JSON.parse(localStorage.getItem('students')) || [];
+
+        // Afficher les étudiants inscrits
+        function displayStudents() {
+            const studentsList = document.getElementById('studentsList');
+            
+            if (students.length === 0) {
+                studentsList.innerHTML = '<p style="text-align: center; color: #999;">Aucune inscription pour le moment</p>';
+                return;
+            }
+
+            studentsList.innerHTML = students.map((student, index) => `
+                <div class="student-card">
+                    <h3>👤 ${student.nom} ${student.prenom}</h3>
+                    <div class="student-info">
+                        <p><strong>Opération:</strong> ${student.operation}</p>
+                        <p><strong>Série:</strong> ${student.serie}</p>
+                        <p><strong>Ville:</strong> ${student.ville}</p>
+                        <p><strong>Matricule:</strong> ${student.matricule}</p>
+                        <p><strong>Langue:</strong> ${student.langue}</p>
+                        <p><strong>Montant:</strong> ${student.montant} FCFA</p>
+                        <p><strong>Téléphone:</strong> ${student.telephone}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Gérer la soumission du formulaire
+        document.getElementById('inscriptionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newStudent = {
+                operation: document.getElementById('operation').value,
+                nom: document.getElementById('nom').value,
+                prenom: document.getElementById('prenom').value,
+                serie: document.getElementById('serie').value,
+                ville: document.getElementById('ville').value,
+                matricule: document.getElementById('matricule').value,
+                langue: document.getElementById('langue').value,
+                montant: document.getElementById('montant').value,
+                telephone: document.getElementById('telephone').value,
+                date: new Date().toLocaleDateString('fr-FR')
+            };
+
+            students.push(newStudent);
+            localStorage.setItem('students', JSON.stringify(students));
+
+            // Réinitialiser le formulaire
+            this.reset();
+
+            // Afficher les étudiants
+            displayStudents();
+
+            // Message de confirmation
+            alert('✅ Inscription réussie ! Bienvenue chez DECO AIDE. Vous recevrez les sujets à 00h sur Facebook et WhatsApp.');
+
+            // Scroll vers la liste
+            document.querySelector('.registered-list').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Afficher les étudiants au chargement de la page
+        displayStudents();
+    </script>
+</body>
+</html>
