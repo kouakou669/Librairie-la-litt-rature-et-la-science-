@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DECO AIDE — Fiche d’inscription</title>
+  <title>DECO AIDE — Fiche d'inscription</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="app.js"></script>
+  <script defer src="validation.js"></script>
 </head>
 
 <body>
-  <!-- Bandeau style Côte d’Ivoire -->
+  <!-- Bandeau style Côte d'Ivoire -->
   <div class="flagbar" aria-hidden="true">
     <span class="c1"></span><span class="c2"></span><span class="c3"></span>
   </div>
@@ -19,7 +20,7 @@
       <div class="logo" aria-hidden="true">DA</div>
       <div>
         <h1>DECO AIDE</h1>
-        <p class="subtitle">Plateforme d’inscription & suivi — Côte d’Ivoire</p>
+        <p class="subtitle">Plateforme d'inscription & suivi — Côte d'Ivoire</p>
       </div>
     </div>
 
@@ -35,10 +36,10 @@
     <section class="hero">
       <div class="hero-card">
         <div class="badge">DECO</div>
-        <h2>FICHE D’INSCRIPTION</h2>
+        <h2>FICHE D'INSCRIPTION</h2>
         <p>
           Remplis tes informations, puis clique sur <strong>Enregistrer</strong>.
-          Ta fiche s’affiche sur le site et reste sauvegardée sur ton appareil.
+          Tu devras valider ton paiement via WhatsApp avant l'enregistrement final.
         </p>
 
         <div class="hero-stats">
@@ -51,21 +52,22 @@
             <div class="stat-value">Organisation • Conseils • Suivi</div>
           </div>
           <div class="stat">
-            <div class="stat-title">Rapide</div>
-            <div class="stat-value">Fiche + Aperçu immédiat</div>
+            <div class="stat-title">Validation</div>
+            <div class="stat-value">Paiement vérifié via WhatsApp</div>
           </div>
         </div>
       </div>
 
       <div class="hero-card alt">
-        <h3>Exemple</h3>
+        <h3>Processus d'inscription</h3>
         <div class="example">
-          <div><strong>Mr</strong> KOUAME JEAN-PIERRE</div>
-          <div class="muted">Examen : BTS • Ville : Abidjan • Filière : Informatique • LV1 : Anglais</div>
-          <div class="muted">Montant versé : 5000 FCFA</div>
+          <div><strong>1.</strong> Remplir le formulaire</div>
+          <div><strong>2.</strong> Valider le paiement sur WhatsApp</div>
+          <div><strong>3.</strong> Recevoir le code de validation</div>
+          <div><strong>4.</strong> Enregistrement confirmé ✅</div>
         </div>
         <p class="muted">
-          Astuce : tu peux <strong>modifier</strong> ou <strong>imprimer</strong> ta fiche après enregistrement.
+          Astuce : prépare ton preuve de paiement (capture d'écran ou reçu).
         </p>
       </div>
     </section>
@@ -110,7 +112,6 @@
             </div>
           </div>
 
-          <!-- AJOUT : EXAMEN + FILIERE -->
           <div class="form-row">
             <div class="field">
               <label for="examen">EXAMEN / NIVEAU</label>
@@ -179,7 +180,7 @@
 
           <div class="form-row">
             <div class="field">
-              <label for="urgence">NUMÉRO TÉLÉPHONE D’URGENCE</label>
+              <label for="urgence">NUMÉRO TÉLÉPHONE D'URGENCE</label>
               <input
                 id="urgence"
                 name="urgence"
@@ -205,7 +206,7 @@
       <section class="card">
         <div class="card-title">
           <h3>Aperçu de la fiche</h3>
-          <p class="muted">Après enregistrement, ta fiche apparaît ici.</p>
+          <p class="muted">Après validation, ta fiche apparaît ici.</p>
         </div>
 
         <div id="preview" class="preview empty">
@@ -213,25 +214,94 @@
         </div>
 
         <div class="card-actions">
-          <button id="btnPrintPreview" class="btn btn-ghost" type="button" disabled>Imprimer l’aperçu</button>
+          <button id="btnPrintPreview" class="btn btn-ghost" type="button" disabled>Imprimer l'aperçu</button>
           <button id="btnDeleteAll" class="btn btn-danger" type="button">Tout supprimer (local)</button>
         </div>
 
         <p class="muted tiny">
-          Suppression “local” = supprime seulement sur cet appareil/navigateur.
+          Suppression "local" = supprime seulement sur cet appareil/navigateur.
         </p>
       </section>
     </section>
+    
+    
+
+    <!-- MODAL DE VALIDATION -->
+    <div id="validationModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>🔐 Validation du paiement</h3>
+          <button class="modal-close" id="closeModal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="validation-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Envoi WhatsApp</h4>
+              <p>Clique sur le bouton ci-dessous pour envoyer tes informations sur WhatsApp.</p>
+              <button id="btnWhatsApp" class="btn btn-success">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+                Envoyer sur WhatsApp
+              </button>
+              <small class="hint">Tu seras redirigé vers WhatsApp avec ton message pré-rempli.</small>
+            </div>
+          </div>
+
+          <div class="validation-divider">
+            <span>PUIS</span>
+          </div>
+
+          <form id="validationForm" class="validation-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Code de validation</h4>
+              <p>Entre le code de validation que tu as reçu après confirmation du paiement.</p>
+              
+              <div class="field">
+                <label for="codeValidation">Code de validation</label>
+                <input 
+                  id="codeValidation" 
+                  name="codeValidation" 
+                  type="text" 
+                  placeholder="Ex: DECO-2026-XXXX" 
+                  required 
+                />
+                <small class="hint">Le code est envoyé après vérification de ton paiement.</small>
+              </div>
+
+              <div class="field">
+                <label for="referencePayment">Référence de paiement (optionnel)</label>
+                <input 
+                  id="referencePayment" 
+                  name="referencePayment" 
+                  type="text" 
+                  placeholder="Ex: Numéro de transaction" 
+                />
+              </div>
+
+              <button type="submit" class="btn btn-primary">Valider et enregistrer</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <p class="muted tiny">⚠️ Sans code de validation, l'inscription ne peut pas être enregistrée.</p>
+        </div>
+      </div>
+    </div>
 
     <!-- LISTE -->
     <section class="card">
       <div class="card-title">
         <h3>Inscriptions enregistrées</h3>
-        <p class="muted">Historique sauvegardé sur l’appareil.</p>
+        <p class="muted">Historique sauvegardé sur l'appareil.</p>
       </div>
 
       <div id="list" class="list empty">
-        <p class="muted">Aucune inscription pour l’instant.</p>
+        <p class="muted">Aucune inscription pour l'instant.</p>
       </div>
     </section>
 
@@ -245,37 +315,37 @@
       <div class="quotes">
         <blockquote>
           <span class="year-badge">2021</span>
-          “J’étais en difficulté en maths. Avec le planning DECO AIDE + les exercices, j’ai validé mon <strong>BEPC</strong>.”
+          "J'étais en difficulté en maths. Avec le planning DECO AIDE + les exercices, j'ai validé mon <strong>BEPC</strong>."
           <footer>— Awa, Abobo</footer>
         </blockquote>
 
         <blockquote>
           <span class="year-badge">2022</span>
-          “Méthode claire, révisions régulières, et surtout discipline. Résultat : <strong>BAC</strong> obtenu ✅”
+          "Méthode claire, révisions régulières, et surtout discipline. Résultat : <strong>BAC</strong> obtenu ✅"
           <footer>— Serge, Bouaké</footer>
         </blockquote>
 
         <blockquote>
           <span class="year-badge">2023</span>
-          “J’ai préparé mon <strong>BT</strong> avec des fiches + exercices corrigés. Je suis passé(e) dès la 1ère session.”
+          "J'ai préparé mon <strong>BT</strong> avec des fiches + exercices corrigés. Je suis passé(e) dès la 1ère session."
           <footer>— Mariam, Daloa</footer>
         </blockquote>
 
         <blockquote>
           <span class="year-badge">2024</span>
-          “Grâce aux révisions ciblées (cours + sujets types), j’ai validé mon <strong>BTS</strong>. Merci DECO AIDE 🙏”
+          "Grâce aux révisions ciblées (cours + sujets types), j'ai validé mon <strong>BTS</strong>. Merci DECO AIDE 🙏"
           <footer>— Junior, Yopougon</footer>
         </blockquote>
 
         <blockquote>
           <span class="year-badge">2025</span>
-          “Concours administratif : on m’a aidé à organiser mes matières, faire des annales et gérer le temps.”
+          "Concours administratif : on m'a aidé à organiser mes matières, faire des annales et gérer le temps."
           <footer>— Kadiatou, Korhogo</footer>
         </blockquote>
 
         <blockquote>
           <span class="year-badge">2026</span>
-          “Le plus fort c’est le suivi : rappels, objectifs, motivation. J’ai pris confiance et j’ai réussi.”
+          "Le plus fort c'est le suivi : rappels, objectifs, motivation. J'ai pris confiance et j'ai réussi."
           <footer>— Patrick, Treichville</footer>
         </blockquote>
       </div>
@@ -284,7 +354,7 @@
     <!-- MESSAGES 00H -->
     <section id="messages-00h" class="card">
       <div class="card-title">
-        <h3> Messages Facebook / WhatsApp veille à 00h</h3>
+        <h3>Messages Facebook / WhatsApp veille à 00h</h3>
         <p class="muted">
           ✅ Conseils de révision, méthode, motivation.  
           ❌ Pas de fuite de sujets / triche.
@@ -293,7 +363,7 @@
 
       <div class="messages">
         <div class="msg">
-          <p class="msg-text" id="m1">⏰ 00h : dernière ligne droite ! 20 minutes de révision des formules + 10 minutes d’exercices, puis dodo. Demain tu assures 💪🇨🇮 #BEPC #BAC</p>
+          <p class="msg-text" id="m1">⏰ 00h : dernière ligne droite ! 20 minutes de révision des formules + 10 minutes d'exercices, puis dodo. Demain tu assures 💪🇨🇮 #BEPC #BAC</p>
           <button class="btn btn-ghost copy" data-copy="#m1">Copier</button>
         </div>
 
@@ -303,12 +373,12 @@
         </div>
 
         <div class="msg">
-          <p class="msg-text" id="m3">🔥 Motivation 00h : Ne cherche pas “la magie”. Cherche la méthode : revoir le cours, faire 2 exercices, corriger, noter les erreurs. Bonne chance à tous 🙏</p>
+          <p class="msg-text" id="m3">🔥 Motivation 00h : Ne cherche pas "la magie". Cherche la méthode : revoir le cours, faire 2 exercices, corriger, noter les erreurs. Bonne chance à tous 🙏</p>
           <button class="btn btn-ghost copy" data-copy="#m3">Copier</button>
         </div>
 
         <div class="msg">
-          <p class="msg-text" id="m4">📚 Astuce veille d’exam : 3 points seulement à mémoriser ce soir : définitions, formules clés, plan de rédaction. Le reste = confiance + sommeil.</p>
+          <p class="msg-text" id="m4">📚 Astuce veille d'exam : 3 points seulement à mémoriser ce soir : définitions, formules clés, plan de rédaction. Le reste = confiance + sommeil.</p>
           <button class="btn btn-ghost copy" data-copy="#m4">Copier</button>
         </div>
 
@@ -347,7 +417,7 @@
           <ul>
             <li>Planning hebdomadaire (matières + objectifs)</li>
             <li>Révision en blocs (25 min / 5 min)</li>
-            <li>Un jour “rattrapage” par semaine</li>
+            <li>Un jour "rattrapage" par semaine</li>
           </ul>
         </div>
 
@@ -370,7 +440,8 @@
   </main>
 
   <footer class="container footer">
-    <p class="muted">© <span id="year"></span> — DECO AIDE • Côte d’Ivoire</p>
+    <p class="muted">© <span id="year"></span> — DECO AIDE • Côte d'Ivoire</p>
   </footer>
 </body>
-    </html>
+                    </html>
+            
