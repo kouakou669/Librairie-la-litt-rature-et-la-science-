@@ -1,7 +1,7 @@
 // validation.js - Gestion de la validation WhatsApp
 
 // Configuration
-const WHATSAPP_NUMBER = "+2250705607226"; // Remplace par le vrai numéro
+const WHATSAPP_NUMBER = "+2250153175058"; // Remplace par le vrai numéro
 const VALIDATION_CODES = new Set(); // Stockage temporaire des codes validés
 
 // Données du formulaire en attente
