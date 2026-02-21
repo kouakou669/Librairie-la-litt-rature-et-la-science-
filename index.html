@@ -6,7 +6,6 @@
   <title>DECO AIDE — Fiche d'inscription</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="app.js"></script>
-  <script defer src="validation.js"></script>
 </head>
 
 <body>
@@ -266,10 +265,11 @@
                   id="codeValidation" 
                   name="codeValidation" 
                   type="text" 
-                  placeholder="Ex: DECO-2026-XXXX" 
+                  placeholder="Ex: 4567D@2026" 
                   required 
                 />
-                <small class="hint">Le code est envoyé après vérification de ton paiement.</small>
+                <small class="hint">Le code doit être donné par "le propriétaire" (Ex: propriétaire@5).</small>
+                <div id="codeError" style="color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem; display: none;"></div>
               </div>
 
               <div class="field">
@@ -442,6 +442,99 @@
   <footer class="container footer">
     <p class="muted">© <span id="year"></span> — DECO AIDE • Côte d'Ivoire</p>
   </footer>
+
+  <script>
+    // LOGIQUE DE VALIDATION DU CODE
+    document.getElementById('validationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const codeInput = document.getElementById('codeValidation');
+      const codeError = document.getElementById('codeError');
+      const code = codeInput.value.trim();
+      
+      // Vérifier que le code se termine par "2026"
+      if (!code.endsWith('2026')) {
+        codeError.textContent = '❌ Code invalide : le code doit se terminer par "2026"';
+        codeError.style.display = 'block';
+        codeInput.style.borderColor = '#ef4444';
+        return;
+      }
+      
+      // Vérifier la longueur minimale (au moins quelques caractères avant 2026)
+      if (code.length < 6) {
+        codeError.textContent = '❌ Code trop court : entre au moins quelques caractères avant "2026"';
+        codeError.style.display = 'block';
+        codeInput.style.borderColor = '#ef4444';
+        return;
+      }
+      
+      // Code valide
+      codeError.style.display = 'none';
+      codeInput.style.borderColor = '#10b981';
+      
+      // Récupérer la référence de paiement
+      const reference = document.getElementById('referencePayment').value.trim();
+      
+      // Sauvegarder les données (à adapter selon votre logique app.js)
+      const formData = new FormData(document.getElementById('formFiche'));
+      const data = Object.fromEntries(formData);
+      data.codeValidation = code;
+      data.referencePayment = reference;
+      data.dateValidation = new Date().toISOString();
+      
+      // Sauvegarder dans localStorage
+      let inscriptions = JSON.parse(localStorage.getItem('inscriptions') || '[]');
+      inscriptions.push(data);
+      localStorage.setItem('inscriptions', JSON.stringify(inscriptions));
+      
+      // Fermer la modal
+      document.getElementById('validationModal').style.display = 'none';
+      
+      // Afficher un message de succès
+      const toast = document.getElementById('toast');
+      toast.textContent = '✅ Inscription validée et enregistrée avec succès !';
+      toast.className = 'toast show success';
+      setTimeout(() => {
+        toast.className = 'toast';
+      }, 3000);
+      
+      // Réinitialiser le formulaire
+      document.getElementById('formFiche').reset();
+      document.getElementById('validationForm').reset();
+      
+      // Rafraîchir la liste des inscriptions (à adapter selon votre logique)
+      if (typeof refreshList === 'function') {
+        refreshList();
+      }
+    });
+    
+    // Réinitialiser les erreurs lors de la saisie
+    document.getElementById('codeValidation').addEventListener('input', function() {
+      document.getElementById('codeError').style.display = 'none';
+      this.style.borderColor = '';
+    });
+    
+    // Année dans le footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Fermer la modal
+    document.getElementById('closeModal').addEventListener('click', function() {
+      document.getElementById('validationModal').style.display = 'none';
+    });
+    
+    // Copier les messages
+    document.querySelectorAll('.copy').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-copy');
+        const text = document.querySelector(targetId).textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          this.textContent = '✓ Copié';
+          setTimeout(() => {
+            this.textContent = 'Copier';
+          }, 2000);
+        });
+      });
+    });
+  </script>
 </body>
-                    </html>
-            
+</html>
